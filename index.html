@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kingdom 2026 | CJC National Youth Camp Programme</title>
+<meta name="description" content="Programme for the CJC Youth Conference 2026, 2-4 October at CJC Mbombela.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a1030; --navy2:#121b4a; --gold:#d4a22f; --ivory:#f6f1e4; --muted:#a9b0cf; --line:rgba(212,162,47,.28);
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Montserrat",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--ivory);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.hero{
+  text-align:center;padding:64px 20px 48px;
+  background:radial-gradient(ellipse at 50% 0%,#24307a 0%,var(--navy) 65%);
+}
+.hero small{display:block;font-weight:600;letter-spacing:.08em;color:var(--ivory);font-size:15px}
+.hero h1{font:700 clamp(64px,19vw,150px)/.9 var(--serif);color:var(--gold);margin:14px 0 6px;letter-spacing:.01em}
+.hero .sub{font:600 clamp(18px,4vw,26px)/1.2 var(--sans);color:var(--ivory)}
+.hero .when{margin-top:22px;font-weight:600;font-size:18px}
+.hero .where{display:inline-block;margin-top:10px;padding:6px 18px;background:var(--navy2);border:1px solid var(--line);color:var(--gold);font-weight:600}
+.hero blockquote{max-width:34ch;margin:28px auto 0;font:italic 600 21px/1.35 var(--serif);color:var(--muted)}
+.hero blockquote cite{display:block;margin-top:6px;font:500 13px var(--sans);font-style:normal;color:var(--gold)}
+
+.count{margin:26px auto 0;max-width:440px}
+.count p{font-weight:600;font-size:13px;color:var(--muted);margin-bottom:8px}
+.count .units{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.count .u{background:var(--navy2);border:1px solid var(--line);padding:12px 4px}
+.count b{display:block;font:700 clamp(32px,9vw,46px)/1 var(--serif);color:var(--gold);font-variant-numeric:tabular-nums}
+.count span{font-size:12px;color:var(--muted)}
+nav{position:sticky;top:0;z-index:5;background:rgba(10,16,48,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0)}
+nav .tabs{display:flex;max-width:760px;margin:auto}
+nav button{flex:1;padding:14px 8px;background:none;border:0;border-bottom:3px solid transparent;color:var(--muted);font:600 15px var(--sans);cursor:pointer}
+nav button span{display:block;font-weight:400;font-size:12px}
+nav button[aria-selected=true]{color:var(--gold);border-bottom-color:var(--gold)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
+
+main{max-width:760px;margin:auto;padding:28px 18px 8px}
+.daytitle{font:700 34px/1.1 var(--serif);color:var(--gold);margin-bottom:18px}
+ol{list-style:none;padding:0}
+li{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:13px 0 13px 12px;border-bottom:1px solid rgba(255,255,255,.08);border-left:3px solid transparent}
+li time{font-weight:600;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:1px}
+li .t{font-weight:500}
+li .who{display:block;font-size:14px;color:var(--gold);margin-top:2px}
+li.key .t{font:700 22px/1.2 var(--serif);color:var(--ivory)}
+li.break .t{color:var(--muted)}
+li.now{background:linear-gradient(90deg,rgba(212,162,47,.18),transparent);border-left-color:var(--gold)}
+li.now::after{content:"Happening now";grid-column:2;font-size:12px;font-weight:700;color:var(--gold)}
+li.done{opacity:.45}
+
+.kingdom{max-width:760px;margin:44px auto 0;padding:0 18px}
+.kingdom h2{font:700 30px var(--serif);color:var(--gold);margin-bottom:14px}
+.kingdom dl{display:grid;grid-template-columns:36px 1fr;row-gap:8px}
+.kingdom dt{font:700 24px/1 var(--serif);color:var(--gold)}
+.kingdom dd{font-weight:500}
+.kingdom dd i{color:var(--muted);font-weight:400;margin-left:6px}
+footer{text-align:center;padding:48px 20px calc(40px + env(safe-area-inset-bottom,0));color:var(--muted);font-size:13px}
+footer p{max-width:46ch;margin:0 auto 8px;font:italic 600 18px/1.4 var(--serif);color:var(--ivory)}
+@media (max-width:480px){li{grid-template-columns:86px 1fr;gap:10px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <small>CJC YOUTH CONFERENCE</small>
+  <h1>Kingdom<br>2026</h1>
+  <div class="sub">National Youth Camp</div>
+  <div class="when">2 to 4 October 2026</div>
+  <div class="where">CJC Mbombela</div>
+  <div class="count" id="count" hidden>
+    <p>Doors open Friday 2 October at 18:00 in</p>
+    <div class="units">
+      <div class="u"><b id="cd">0</b><span>days</span></div>
+      <div class="u"><b id="ch">00</b><span>hours</span></div>
+      <div class="u"><b id="cm">00</b><span>minutes</span></div>
+      <div class="u"><b id="cs">00</b><span>seconds</span></div>
+    </div>
+  </div>
+  <blockquote>"Seek first the Kingdom of God and His righteousness..."<cite>Matthew 6:33</cite></blockquote>
+</header>
+
+<nav aria-label="Programme days"><div class="tabs" role="tablist" id="tabs"></div></nav>
+<main><h2 class="daytitle" id="daytitle"></h2><ol id="list" aria-live="polite"></ol></main>
+
+<section class="kingdom">
+  <h2>The Kingdom theme</h2>
+  <dl>
+    <dt>K</dt><dd>Knowledge of God<i>John 17:3</i></dd>
+    <dt>I</dt><dd>Invitation<i>Mark 1:15</i></dd>
+    <dt>N</dt><dd>New birth<i>John 3:3-5</i></dd>
+    <dt>G</dt><dd>Grace<i>Ephesians 2:8-9</i></dd>
+    <dt>D</dt><dd>Death to self<i>Luke 9:23</i></dd>
+    <dt>O</dt><dd>Obedience<i>Matthew 7:21</i></dd>
+    <dt>M</dt><dd>Mission<i>Matthew 28:19-20</i></dd>
+  </dl>
+</section>
+<footer><p>Arise, shine, for your light has come, and the glory of the Lord rises upon you.</p>Isaiah 60:1</footer>
+
+<script>
+// [start, end, title, who, type]  type: k = key moment, b = break/meal
+const DAYS=[
+{name:"Friday",date:"2 Oct",iso:"2026-10-02",items:[
+["18:00","19:30","Arrival and registration"],
+["19:30","19:50","Registration finalisation"],
+["20:00","20:10","Opening","Music Team"],
+["20:10","20:20","Welcome and opening prayer","Nelspruit"],
+["20:20","20:35","Praise"],
+["20:35","20:45","Offering","Etwatwa"],
+["20:45","20:55","Worship"],
+["20:55","21:40","Word",,"k"],
+["21:40","21:45","Closing prayer by the pastor on the pulpit and announcements","Nelspruit"],
+["21:45","22:00","Allocation"],
+["23:00",,"Lights out","", "b"]]},
+{name:"Saturday",date:"3 Oct",iso:"2026-10-03",items:[
+["06:00","07:00","Morning devotion","Tebogo"],
+["07:00","08:30","Bath time",,"b"],
+["08:30","09:30","Breakfast",,"b"],
+["09:35","09:50","Intercession","Tebogo"],
+["10:00","10:10","Opening","Music Team"],
+["10:10","10:20","Opening prayer and welcome","Soweto"],
+["10:20","10:30","Praise"],
+["10:30","10:40","Offering","Venda"],
+["10:40","10:55","Worship"],
+["10:55","11:40","Word",,"k"],
+["11:40","11:55","Altar call"],
+["11:55","12:00","Announcements and closing prayer","Soweto"],
+["12:00","12:25","Break",,"b"],
+["12:25","13:10","Lunch",,"b"],
+["13:10","13:25","Prep and intercession","Rophuluswa"],
+["13:30","13:35","Opening music"],
+["13:35","13:45","Offering","Soweto"],
+["13:45","14:00","Worship"],
+["14:00","15:00","Workshop"],
+["15:00","15:25","Workshop Q&A and reflection"],
+["15:25","15:30","Closing prayer and announcements"],
+["15:30","15:50","Break",,"b"],
+["15:50","16:00","Outdoor activity prep"],
+["16:00","17:45","Outdoor games and activities","Group team building","k"],
+["18:00","18:40","Supper / dinner",,"b"],
+["19:00","21:30","Talent show",,"k"],
+["21:45","23:30","Bonfire",,"k"],
+["00:00",,"Lights out",,"b"]]},
+{name:"Sunday",date:"4 Oct",iso:"2026-10-04",items:[
+["06:00","07:00","Morning devotion","Etwatwa"],
+["07:00","08:30","Bath time",,"b"],
+["08:30","09:30","Breakfast",,"b"],
+["09:35","09:50","Intercession","Nelspruit | Thembisa"],
+["10:00","10:10","Opening","Music Team"],
+["10:10","10:20","Opening prayer and welcome","Thembisa"],
+["10:20","10:30","Praise"],
+["10:30","10:40","Offering","Venda"],
+["10:40","10:55","Worship"],
+["10:55","11:45","Word",,"k"],
+["11:45","11:55","Altar call"],
+["11:55","12:00","Announcements and closing prayer","Soweto | Nelspruit"],
+["12:00","13:00","Lunch",,"b"],
+["13:00",,"Departure",,"k"]]}
+];
+const $=id=>document.getElementById(id);
+const mins=t=>{const[h,m]=t.split(":").map(Number);return h*60+m};
+// Event runs on South African time (UTC+2), so every viewer sees the same schedule
+const START=new Date("2026-10-02T18:00:00+02:00");
+function sa(){
+  const p=Object.fromEntries(new Intl.DateTimeFormat("en-GB",{timeZone:"Africa/Johannesburg",hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+  return {iso:`${p.year}-${p.month}-${p.day}`,m:+p.hour*60+ +p.minute};
+}
+let current=Math.max(0,DAYS.findIndex(d=>d.iso===sa().iso));
+
+function render(){
+  const d=DAYS[current], n=sa(), isToday=d.iso===n.iso, nowM=n.m;
+  $("daytitle").textContent=d.name+", "+d.date;
+  $("list").innerHTML=d.items.map(([s,e,t,w,k])=>{
+    let cls=k==="k"?"key":k==="b"?"break":"";
+    if(isToday){
+      const a=mins(s)||0; let b=e?mins(e):a+30;
+      if(s==="00:00"){/* after midnight, skip live state */}
+      else if(nowM>=a&&nowM<b)cls+=" now"; else if(nowM>=b)cls+=" done";
+    }
+    return `<li class="${cls.trim()}"><time>${s}${e?" – "+e:""}</time><div><span class="t">${t}</span>${w?`<span class="who">${w}</span>`:""}</div></li>`;
+  }).join("");
+}
+$("tabs").innerHTML=DAYS.map((d,i)=>`<button role="tab" data-i="${i}">${d.name}<span>${d.date}</span></button>`).join("");
+function tabs(){document.querySelectorAll("#tabs button").forEach((b,i)=>b.setAttribute("aria-selected",i===current))}
+$("tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;current=+b.dataset.i;tabs();render();scrollTo({top:document.querySelector("nav").offsetTop,behavior:"smooth"})});
+tabs();render();
+setInterval(render,30000);
+
+// Countdown to the first programme item; removed once it reaches zero
+const box=$("count");
+function tick(){
+  const left=START-Date.now();
+  if(left<=0){box.remove();clearInterval(timer);render();return}
+  box.hidden=false;
+  const t=Math.floor(left/1000), pad=v=>String(v).padStart(2,"0");
+  $("cd").textContent=Math.floor(t/86400);
+  $("ch").textContent=pad(Math.floor(t%86400/3600));
+  $("cm").textContent=pad(Math.floor(t%3600/60));
+  $("cs").textContent=pad(t%60);
+}
+const timer=setInterval(tick,1000);tick();
+</script>
+</body>
+</html>
