@@ -41,7 +41,19 @@ nav button span{display:block;font-weight:400;font-size:12px}
 nav button[aria-selected=true]{color:var(--gold);border-bottom-color:var(--gold)}
 button:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
 
-main{max-width:760px;margin:auto;padding:28px 18px 8px}
+.notices{max-width:760px;margin:0 auto;padding:28px 18px 0}
+.notices h2{font:700 30px var(--serif);color:var(--gold);margin-bottom:12px}
+.notices ul{list-style:none;padding:0;display:grid;gap:10px}
+.notices li{display:block;padding:14px 16px;background:var(--navy2);border:1px solid var(--line);border-left:4px solid var(--gold)}
+.notices li strong{display:block;font-weight:700}
+.notices li p{margin-top:4px;color:var(--ivory);font-size:15px}
+.notices li em{display:block;margin-top:6px;font-style:normal;font-size:12px;font-weight:600;color:var(--gold)}
+.notices a{color:var(--gold)}
+main{max-width:760px;margin:auto;padding:28px 0 8px}
+.pager{display:flex;align-items:flex-start;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;transition:height .25s ease}
+.pager::-webkit-scrollbar{display:none}
+.day{flex:0 0 100%;min-width:0;scroll-snap-align:start;scroll-snap-stop:always;padding:0 18px}
+.hint{font-size:12px;color:var(--muted);margin:-8px 0 10px}
 .daytitle{font:700 34px/1.1 var(--serif);color:var(--gold);margin-bottom:18px}
 ol{list-style:none;padding:0}
 li{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:13px 0 13px 12px;border-bottom:1px solid rgba(255,255,255,.08);border-left:3px solid transparent}
@@ -63,7 +75,7 @@ li.done{opacity:.45}
 footer{text-align:center;padding:48px 20px calc(40px + env(safe-area-inset-bottom,0));color:var(--muted);font-size:13px}
 footer p{max-width:46ch;margin:0 auto 8px;font:italic 600 18px/1.4 var(--serif);color:var(--ivory)}
 @media (max-width:480px){li{grid-template-columns:86px 1fr;gap:10px}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pager{transition:none}}
 </style>
 </head>
 <body>
@@ -74,7 +86,7 @@ footer p{max-width:46ch;margin:0 auto 8px;font:italic 600 18px/1.4 var(--serif);
   <div class="when">2 to 4 October 2026</div>
   <div class="where">CJC Mbombela</div>
   <div class="count" id="count" hidden>
-    <p>Doors open Friday 2 October at 18:00 in</p>
+    <p>First item on program starts at 18:00 in</p>
     <div class="units">
       <div class="u"><b id="cd">0</b><span>days</span></div>
       <div class="u"><b id="ch">00</b><span>hours</span></div>
@@ -85,8 +97,10 @@ footer p{max-width:46ch;margin:0 auto 8px;font:italic 600 18px/1.4 var(--serif);
   <blockquote>"Seek first the Kingdom of God and His righteousness..."<cite>Matthew 6:33</cite></blockquote>
 </header>
 
+<section class="notices" id="notices" hidden><h2>Announcements</h2><ul id="noticeList"></ul></section>
+
 <nav aria-label="Programme days"><div class="tabs" role="tablist" id="tabs"></div></nav>
-<main><h2 class="daytitle" id="daytitle"></h2><ol id="list" aria-live="polite"></ol></main>
+<main><div class="pager" id="pager"></div></main>
 
 <section class="kingdom">
   <h2>The Kingdom theme</h2>
@@ -103,6 +117,14 @@ footer p{max-width:46ch;margin:0 auto 8px;font:italic 600 18px/1.4 var(--serif);
 <footer><p>Arise, shine, for your light has come, and the glory of the Lord rises upon you.</p>Isaiah 60:1</footer>
 
 <script>
+// ANNOUNCEMENTS: edit this list. One line per announcement: {title, text, when}.
+// "text" and "when" are optional. Leave the list empty ([]) to hide the section.
+// You can use simple HTML in text, e.g. <a href="https://...">link</a>
+const ANNOUNCEMENTS=[
+  //{title:"Example announcement", text:"Replace this with your own message.", when:"Friday"},
+  //{title:"Another example", text:"Delete these two lines when you add your real ones."}
+];
+
 // [start, end, title, who, type]  type: k = key moment, b = break/meal
 const DAYS=[
 {name:"Friday",date:"2 Oct",iso:"2026-10-02",items:[
@@ -171,24 +193,43 @@ function sa(){
   return {iso:`${p.year}-${p.month}-${p.day}`,m:+p.hour*60+ +p.minute};
 }
 let current=Math.max(0,DAYS.findIndex(d=>d.iso===sa().iso));
+const pager=$("pager");
 
-function render(){
-  const d=DAYS[current], n=sa(), isToday=d.iso===n.iso, nowM=n.m;
-  $("daytitle").textContent=d.name+", "+d.date;
-  $("list").innerHTML=d.items.map(([s,e,t,w,k])=>{
+// Announcements #####################################################################################################################
+if(ANNOUNCEMENTS.length){
+  $("noticeList").innerHTML=ANNOUNCEMENTS.map(a=>`<li><strong>${a.title}</strong>${a.text?`<p>${a.text}</p>`:""}${a.when?`<em>${a.when}</em>`:""}</li>`).join("");
+  $("notices").hidden=false;
+}
+
+function dayHTML(d){
+  const n=sa(), isToday=d.iso===n.iso, nowM=n.m;
+  const rows=d.items.map(([s,e,t,w,k])=>{
     let cls=k==="k"?"key":k==="b"?"break":"";
-    if(isToday){
-      const a=mins(s)||0; let b=e?mins(e):a+30;
-      if(s==="00:00"){/* after midnight, skip live state */}
-      else if(nowM>=a&&nowM<b)cls+=" now"; else if(nowM>=b)cls+=" done";
+    if(isToday&&s!=="00:00"){
+      const a=mins(s); const b=e?mins(e):a+30;
+      if(nowM>=a&&nowM<b)cls+=" now"; else if(nowM>=b)cls+=" done";
     }
     return `<li class="${cls.trim()}"><time>${s}${e?" – "+e:""}</time><div><span class="t">${t}</span>${w?`<span class="who">${w}</span>`:""}</div></li>`;
   }).join("");
+  return `<section class="day" aria-label="${d.name}"><h2 class="daytitle">${d.name}, ${d.date}</h2><ol>${rows}</ol></section>`;
 }
-$("tabs").innerHTML=DAYS.map((d,i)=>`<button role="tab" data-i="${i}">${d.name}<span>${d.date}</span></button>`).join("");
+function fit(){const el=pager.children[current];if(el)pager.style.height=el.offsetHeight+"px"}
+function render(){pager.innerHTML=DAYS.map(dayHTML).join("");fit()}
 function tabs(){document.querySelectorAll("#tabs button").forEach((b,i)=>b.setAttribute("aria-selected",i===current))}
-$("tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;current=+b.dataset.i;tabs();render();scrollTo({top:document.querySelector("nav").offsetTop,behavior:"smooth"})});
-tabs();render();
+
+$("tabs").innerHTML=DAYS.map((d,i)=>`<button role="tab" data-i="${i}">${d.name}<span>${d.date}</span></button>`).join("");
+$("tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;pager.scrollTo({left:+b.dataset.i*pager.clientWidth,behavior:"smooth"})});
+pager.addEventListener("scroll",()=>{
+  const i=Math.round(pager.scrollLeft/pager.clientWidth);
+  if(i!==current&&DAYS[i]){current=i;tabs();fit()}
+},{passive:true});
+addEventListener("resize",()=>{pager.scrollLeft=current*pager.clientWidth;fit()});
+addEventListener("load",fit);
+if(document.fonts)document.fonts.ready.then(fit);
+
+render();tabs();
+pager.style.transition="none";pager.scrollLeft=current*pager.clientWidth;fit();
+requestAnimationFrame(()=>pager.style.transition="");
 setInterval(render,30000);
 
 // Countdown to the first programme item; removed once it reaches zero
